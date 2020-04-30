@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://nikhil:nikhil123@cluster0-duzlk.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtSecret": "JwtSecret_ShopList"
+}
