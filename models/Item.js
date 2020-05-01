@@ -4,11 +4,15 @@ const Schema = mongoose.Schema;
 const ItemSchema = new Schema({
     name: {
         type: String,
-        requiredPaths: true
+        required: true
     },
     date: {
         type: Date,
         default: Date.now
+    },
+    userid: {
+        type: Object,
+        required: true
     }
 });
 

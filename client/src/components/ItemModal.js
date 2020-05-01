@@ -32,7 +32,8 @@ class ItemModal extends Component {
         e.preventDefault();
 
         const newItem = {
-            name: this.state.name
+            name: this.state.name,
+            userid: this.props.user._id
         }
 
         this.props.addItem(newItem);
@@ -81,5 +82,9 @@ class ItemModal extends Component {
         );
     }
 }
+const mapStateTopProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
+})
 
-export default connect(null, {addItem})(ItemModal);
+export default connect(mapStateTopProps, { addItem })(ItemModal);

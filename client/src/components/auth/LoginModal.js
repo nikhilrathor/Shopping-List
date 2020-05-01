@@ -13,13 +13,12 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { register } from '../../actions/authActions';
+import { login } from '../../actions/authActions';
 import { clearErrors } from '../../actions/errorActions';
 
-class RegisterModal extends Component {
+class LoginModal extends Component {
     state = {
         modal: false,
-        name: '',
         email: '',
         password: '',
         msg: null
@@ -28,22 +27,22 @@ class RegisterModal extends Component {
     static propTypes = {
         isAuthenticated: PropTypes.bool,
         error: PropTypes.object.isRequired,
-        register: PropTypes.func.isRequired,
+        login: PropTypes.func.isRequired,
         clearErrors: PropTypes.func.isRequired
     }
 
     componentDidUpdate(prevProps) {
         const { error, isAuthenticated } = this.props;
         if (error !== prevProps.error) {
-            if (error.id === 'REGISTER_FAIL') {
+            if (error.id === 'LOGIN_FAIL') {
                 this.setState({ msg: error.msg.msg });
             }
             else
                 this.setState({ msg: null });
         }
 
-        if(this.state.modal){
-            if(isAuthenticated){
+        if (this.state.modal) {
+            if (isAuthenticated) {
                 this.toggle();
             }
         }
@@ -51,7 +50,7 @@ class RegisterModal extends Component {
     }
 
     toggle = () => {
-        if(this.state.msg)
+        if (this.state.msg)
             this.props.clearErrors();
         this.setState({
             modal: !this.state.modal
@@ -65,43 +64,31 @@ class RegisterModal extends Component {
     onSubmit = (e) => {
         e.preventDefault();
 
-        const { name, email, password } = this.state;
+        const { email, password } = this.state;
 
-        const newUser = {
-            name,
+        const user = {
             email,
             password
         }
 
-        this.props.register(newUser);
-
+        this.props.login(user);
     }
 
     render() {
         return (
             <div>
                 <NavLink onClick={this.toggle} href="#">
-                    Register
+                    Login
                 </NavLink>
                 <Modal
                     isOpen={this.state.modal}
                     toggle={this.toggle}
                 >
-                    <ModalHeader toggle={this.toggle}>Register</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>Login</ModalHeader>
                     <ModalBody>
                         {this.state.msg ? (<Alert color='danger'>{this.state.msg}</Alert>) : null}
                         <Form onSubmit={this.onSubmit} >
                             <FormGroup>
-                                <Label for="name">Name</Label>
-                                <Input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    placeholder="Name"
-                                    className="mb-3"
-                                    onChange={this.onChange}
-                                >
-                                </Input>
                                 <Label for="email">Email</Label>
                                 <Input
                                     type="email"
@@ -112,7 +99,7 @@ class RegisterModal extends Component {
                                     onChange={this.onChange}
                                 >
                                 </Input>
-                                <Label for="password">Password</Label>
+                                <Label for="password">Name</Label>
                                 <Input
                                     type="password"
                                     name="password"
@@ -127,7 +114,7 @@ class RegisterModal extends Component {
                                     style={{ marginTop: '2rem' }}
                                     block
                                 >
-                                    Register
+                                    Login
                                 </Button>
                             </FormGroup>
                         </Form>
@@ -143,4 +130,4 @@ const mapStateToProps = state => ({
     error: state.error
 })
 
-export default connect(mapStateToProps, { register, clearErrors })(RegisterModal);
+export default connect(mapStateToProps, { login, clearErrors })(LoginModal);

@@ -4,15 +4,18 @@ const auth = require('../../middleware/auth');
 
 const Item = require('../../models/Item');
 
-router.get('/', (req, res) => {
-    Item.find()
+router.get('/:userid', (req, res) => {
+    const user = req.params.userid;
+    console.log("user:"+user);
+    Item.find({userid: user})
         .sort({ date: -1 })
         .then(items => res.json(items));
 });
 
 router.post('/', auth, (req, res) => {
     const newItem = new Item({
-        name: req.body.name
+        name: req.body.name,
+        userid: req.body.userid
     });
     newItem.save()
         .then(item => res.json(item));

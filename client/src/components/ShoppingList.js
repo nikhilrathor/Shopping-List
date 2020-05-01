@@ -7,7 +7,8 @@ import PropTypes from 'prop-types';
 
 class ShoppingList extends Component {
     componentDidMount() {
-        this.props.getItems();
+        console.log("hi");
+        this.props.getItems(this.props.user._id);
     }
 
     onDeleteClick = (id) => {
@@ -44,7 +45,8 @@ ShoppingList.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    item: state.item
+    item: state.item,
+    user: state.auth.user
 })
 
 export default connect(mapStateToProps, { getItems, deleteItem })(ShoppingList);
