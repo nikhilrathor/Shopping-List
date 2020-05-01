@@ -16,8 +16,8 @@ const initialState = {
     user: null
 }
 
-const reducer = (state = initialState, action) =>{
-    switch(action.type){
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
         case USER_LOADING:
             return {
                 ...state,
@@ -32,6 +32,7 @@ const reducer = (state = initialState, action) =>{
             }
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
+            localStorage.setItem('token', action.payload.token);
             return {
                 ...state,
                 ...action.payload,
@@ -49,7 +50,7 @@ const reducer = (state = initialState, action) =>{
                 user: null,
                 isAuthenticated: false,
                 isLoading: false
-            } 
+            }
         default:
             return state;
     }
