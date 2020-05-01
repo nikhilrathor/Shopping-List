@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { Container, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
+import { loadUser } from '../actions/authActions';
 import { getItems, deleteItem } from '../actions/itemActions';
 import PropTypes from 'prop-types';
 
 class ShoppingList extends Component {
     componentDidMount() {
-        console.log("hi");
-        this.props.getItems(this.props.user._id);
+        this.props.loadUser();
+        this.props.getItems(this.props.user.email);
     }
 
     onDeleteClick = (id) => {
@@ -49,4 +50,4 @@ const mapStateToProps = (state) => ({
     user: state.auth.user
 })
 
-export default connect(mapStateToProps, { getItems, deleteItem })(ShoppingList);
+export default connect(mapStateToProps, { getItems, deleteItem, loadUser })(ShoppingList);

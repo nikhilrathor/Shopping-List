@@ -6,7 +6,6 @@ const Item = require('../../models/Item');
 
 router.get('/:userid', (req, res) => {
     const user = req.params.userid;
-    console.log("user:"+user);
     Item.find({userid: user})
         .sort({ date: -1 })
         .then(items => res.json(items));

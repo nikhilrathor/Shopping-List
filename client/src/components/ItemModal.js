@@ -33,7 +33,7 @@ class ItemModal extends Component {
 
         const newItem = {
             name: this.state.name,
-            userid: this.props.user._id
+            userid: this.props.user.email
         }
 
         this.props.addItem(newItem);
